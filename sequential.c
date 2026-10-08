@@ -4,9 +4,6 @@
 #include <ctype.h>
 #include <windows.h>
 
-#define BUS_CAPACITY 100
-#define TOTAL_BUSES 10000
-
 /* ============================================================
    STRUCTURES
    ============================================================ */
@@ -421,6 +418,14 @@ int compare_demand(
 
 int main()
 {
+    int BUS_CAPACITY;
+    int TOTAL_BUSES;
+
+    printf("Enter bus capacity: ");
+    scanf("%d", &BUS_CAPACITY);
+
+    printf("Enter total number of buses: ");
+    scanf("%d", &TOTAL_BUSES);
     Stop *stops = NULL;
     RouteStop *routes = NULL;
     Demand *demand = NULL;

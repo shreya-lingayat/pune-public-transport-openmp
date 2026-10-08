@@ -4,8 +4,7 @@
 #include <ctype.h>
 #include <omp.h>
 
-#define BUS_CAPACITY 50
-#define TOTAL_BUSES 100
+
 
 // ============================================================
 // STRUCTURES
@@ -349,6 +348,15 @@ int compare_demand(const void *a, const void *b) {
 // ============================================================
 
 int main() {
+    
+    int BUS_CAPACITY;
+    int TOTAL_BUSES;
+
+    printf("Enter bus capacity: ");
+    scanf("%d", &BUS_CAPACITY);
+
+    printf("Enter total number of buses: ");
+    scanf("%d", &TOTAL_BUSES);
 
     Stop *stops = NULL;
     RouteStop *routes = NULL;
@@ -412,6 +420,17 @@ int main() {
     // Each demand record is independent
     // ========================================================
 
+    int num_threads;
+
+    printf("Enter number of threads: ");
+    scanf("%d", &num_threads);
+
+    omp_set_num_threads(num_threads);
+
+    // int total_passengers = 0;
+    // int total_required_buses = 0;
+
+
     #pragma omp parallel for reduction(+:total_passengers,total_required_buses)
 
     for (int i = 0; i < demand_count; i++) {
@@ -427,6 +446,10 @@ int main() {
         total_passengers += passengers;
         total_required_buses += required;
     }
+
+    printf("Number of threads used: %d\n", num_threads);
+    printf("Total passengers: %d\n", total_passengers);
+    printf("Total required buses: %d\n", total_required_buses);
 
     // --------------------------------------------------------
     // SORT DEMANDS
